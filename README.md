@@ -22,3 +22,16 @@ $ ./minishell
 - PATH and environment must be handled correctly (copy of system char \*\*cnvironment)
 - A series of buildins: echo, cd, setenv, unsetenv, exit must be implemented
 - expantions: $ and ~ must be handled
+
+## Allowed functions
+
+- malloc, free
+- access
+- open, close, read, write
+- opendir, readdir, closedir
+- getcwd, chdir
+- stat, lstat, fstat
+- fork, execve
+- wait, waitpid, wait3, wait4
+- signal, kill
+- exit

@@ -6,7 +6,7 @@
 #    By: syamada <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/06 21:25:07 by syamada           #+#    #+#              #
-#    Updated: 2018/09/22 21:05:36 by syamada          ###   ########.fr        #
+#    Updated: 2018/09/23 16:21:04 by syamada          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,9 @@ INCDIR		:= includes
 
 MINI		:= minishell
 
-MINISRC		+= $(addprefix $(SRCDIR)/, minishell.c)
+MINISRC		+= $(addprefix $(SRCDIR)/, minishell.c \
+			   cd_func.c echo_func.c setenv_func.c unsetenv_func.c \
+			   env_func.c pwd_func.c exit_func.c)
 
 #color
 COM_COLOR	:= \033[0;34m
