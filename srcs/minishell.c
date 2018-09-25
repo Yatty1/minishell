@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/22 21:06:45 by syamada           #+#    #+#             */
-/*   Updated: 2018/09/23 16:32:06 by syamada          ###   ########.fr       */
+/*   Updated: 2018/09/24 17:19:27 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,29 @@ void	dispatch_cmd(int argc, char	**argv)
 		}
 		i++;
 	}
+}
+
+int		path_cmd(char **argv)
+{
+	int				fd;
+	DIR				*dfd;
+	struct dirent	*dir;
+	char			*line;
+
+	line = NULL;
+	if ((fd = open("/etc/paths", O_RDONLY)) < 0)
+		return (-1);
+	while (get_next_line(fd, &line) > 0)
+	{
+		if ((dfd = opendir(line, O_RDONLY)) < 0)
+			continue ;
+		while ((dir = readdir(dfd)) < 0)
+		{
+			if (access(path, F_OK & X_OK))
+				return (execve(argv[0], argv, NULL));
+		}
+	}
+	return (0);
 }
 
 int		main(int argc, char **argv)
