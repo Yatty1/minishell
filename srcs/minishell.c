@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/22 21:06:45 by syamada           #+#    #+#             */
-/*   Updated: 2018/09/26 23:15:52 by syamada          ###   ########.fr       */
+/*   Updated: 2018/09/27 16:50:50 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,27 @@ t_cmd	g_cmd_table[CMD_NUM] = {
 	{"exit", &exit_func},
 };
 
-void	path_cmd(char **argv)
+void   binary_cmd(char **argv)
 {
-	char *cmd;
+	char		*bpath;
+	char		**input;
+	int		i;
 
-	cmd = ft_strjoin("/bin/", argv[0]);
-	execve(cmd, argv, g_environ);
-	ft_strdel(&cmd);
+	i = 0;
+	bpath = get_envv("PATH");
+	input = ft_strsplit(bpath, ':');
+	ft_strdel(&bpath);
+	while (input[i])
+	{
+		bpath = ft_strjoin_with(input[i], argv[0], '/');
+		if (access(bpath, F_OK & X_OK) == 0)
+			break;
+		ft_strdel(&bpath);
+		i++;
+	}
+	execve(bpath, argv, g_environ);
+	ft_tdstrdel(&input);
+	ft_strdel(&bpath);
 }
 
 void	dispatch_cmd(int argc, char	**argv)
@@ -45,7 +59,7 @@ void	dispatch_cmd(int argc, char	**argv)
 		}
 		i++;
 	}
-	path_cmd(argv);
+	binary_cmd(argv);
 }
 
 void	init_environ(char **env)
@@ -60,21 +74,27 @@ void	init_environ(char **env)
 	g_environ[i] = 0;
 }
 
+/*
+** IDEA:
+** custom prompt with flag
+*/
+
 int		main(int argc, char **argv, char **env)
 {
-	char	*line;
-	char	**input;
+	pid_t	pid;
 
-	line = NULL;
 	init_environ(env);
-	ft_putstr("$> ");
-	while (get_next_line(0, &line) > 0)
+	while (1)
 	{
-		input = ft_strsplit(line, ' ');
-		dispatch_cmd(ft_tdstrnum(input), input);
-		ft_tdstrdel(&input);
-		ft_strdel(&line);
-		ft_putstr("$> ");
+		pid = fork();
+		if (pid != 0)
+		{
+			wait(&pid);
+			if (WIFEXITED(pid) && WEXITSTATUS(pid) == 10)
+				exit(1);
+		}
+		else if (!pid)
+			read_cmd();
 	}
 	return (0);
 }

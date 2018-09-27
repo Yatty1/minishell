@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/23 16:08:41 by syamada           #+#    #+#             */
-/*   Updated: 2018/09/26 23:03:17 by syamada          ###   ########.fr       */
+/*   Updated: 2018/09/27 15:02:07 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,6 @@ void	exit_func(int argc, char **argv)
 	if (argc == 0 && !*argv)
 	{
 		ft_tdstrdel(&g_environ);
-		exit(0);
+		exit(10);
 	}
 }

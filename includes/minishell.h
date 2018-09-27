@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/22 21:06:06 by syamada           #+#    #+#             */
-/*   Updated: 2018/09/26 22:40:42 by syamada          ###   ########.fr       */
+/*   Updated: 2018/09/27 16:50:50 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "../libft/includes/ft_printf.h"
 # include "../libft/includes/get_next_line.h"
 # include <unistd.h>
+# include <sys/wait.h>
 
 # define CMD_NUM 7
 
@@ -31,7 +32,13 @@ typedef struct	s_cmd
 
 void			init_environ(char **env);
 void			dispatch_cmd(int argc, char **argv);
+void			binary_cmd(char **argv);
+void			read_cmd(void);
+
 char			*get_envv(char *name);
+int				update_envv(char *name, char *value);
+void			new_envv(char *name, char *value);
+void			del_envv(char *name);
 
 void			pwd_func(int argc, char **argv);
 void			cd_func(int argc, char **argv);
