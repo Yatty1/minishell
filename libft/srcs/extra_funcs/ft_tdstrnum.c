@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd_func.c                                          :+:      :+:    :+:   */
+/*   ft_tdstrnum.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/09/23 16:05:54 by syamada           #+#    #+#             */
-/*   Updated: 2018/09/26 23:15:51 by syamada          ###   ########.fr       */
+/*   Created: 2018/09/26 20:56:31 by syamada           #+#    #+#             */
+/*   Updated: 2018/09/26 21:00:05 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	cd_func(int argc, char **argv)
+int		ft_tdstrnum(char **tdstr)
 {
-	char	*path;
-	char	*curr;
+	int		i;
 
-	path = NULL;
-	curr = get_envv("PWD");
-	if (!*argv)
-		path = get_envv("HOME");
-	else
-	{
-	}
-	update_envv("OLDPWD", curr);
-	if (!chdir(path))
-		update_envv("PWD", path);
+	i = 0;
+	while (tdstr[i])
+		i++;
+	return (i);
 }

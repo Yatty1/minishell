@@ -6,11 +6,11 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/22 21:06:45 by syamada           #+#    #+#             */
-/*   Updated: 2018/09/24 17:19:27 by syamada          ###   ########.fr       */
+/*   Updated: 2018/09/26 23:15:52 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_mini.h"
+#include "minishell.h"
 
 t_cmd	g_cmd_table[CMD_NUM] = {
 	{"pwd", &pwd_func},
@@ -21,6 +21,15 @@ t_cmd	g_cmd_table[CMD_NUM] = {
 	{"env", &env_func},
 	{"exit", &exit_func},
 };
+
+void	path_cmd(char **argv)
+{
+	char *cmd;
+
+	cmd = ft_strjoin("/bin/", argv[0]);
+	execve(cmd, argv, g_environ);
+	ft_strdel(&cmd);
+}
 
 void	dispatch_cmd(int argc, char	**argv)
 {
@@ -36,46 +45,36 @@ void	dispatch_cmd(int argc, char	**argv)
 		}
 		i++;
 	}
+	path_cmd(argv);
 }
 
-int		path_cmd(char **argv)
+void	init_environ(char **env)
 {
-	int				fd;
-	DIR				*dfd;
-	struct dirent	*dir;
-	char			*line;
+	int		i;
 
-	line = NULL;
-	if ((fd = open("/etc/paths", O_RDONLY)) < 0)
-		return (-1);
-	while (get_next_line(fd, &line) > 0)
-	{
-		if ((dfd = opendir(line, O_RDONLY)) < 0)
-			continue ;
-		while ((dir = readdir(dfd)) < 0)
-		{
-			if (access(path, F_OK & X_OK))
-				return (execve(argv[0], argv, NULL));
-		}
-	}
-	return (0);
+	i = ft_tdstrnum(env);
+	g_environ = (char **)ft_memalloc(sizeof(char *) * (i + 1));
+	i = -1;
+	while (env[++i])
+		g_environ[i] = ft_strdup(env[i]);
+	g_environ[i] = 0;
 }
 
-int		main(int argc, char **argv)
+int		main(int argc, char **argv, char **env)
 {
 	char	*line;
-	char *const c[] = {"/bin/ls", "-l", ".", 0};
+	char	**input;
 
 	line = NULL;
-	execve(c[0], c, NULL);
-	/*
+	init_environ(env);
 	ft_putstr("$> ");
 	while (get_next_line(0, &line) > 0)
 	{
-		ft_putendl(line);
+		input = ft_strsplit(line, ' ');
+		dispatch_cmd(ft_tdstrnum(input), input);
+		ft_tdstrdel(&input);
 		ft_strdel(&line);
 		ft_putstr("$> ");
 	}
-	*/
 	return (0);
 }

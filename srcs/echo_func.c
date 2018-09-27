@@ -6,11 +6,11 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/23 16:07:10 by syamada           #+#    #+#             */
-/*   Updated: 2018/09/23 16:07:32 by syamada          ###   ########.fr       */
+/*   Updated: 2018/09/26 22:41:15 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_mini.h"
+#include "minishell.h"
 
 void	echo_func(int argc, char **argv)
 {

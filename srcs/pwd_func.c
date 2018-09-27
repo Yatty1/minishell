@@ -6,12 +6,17 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/23 16:06:37 by syamada           #+#    #+#             */
-/*   Updated: 2018/09/23 16:21:43 by syamada          ###   ########.fr       */
+/*   Updated: 2018/09/26 23:11:35 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_mini.h"
+#include "minishell.h"
 
 void	pwd_func(int argc, char **argv)
 {
+	char	*pwd;
+
+	pwd = get_envv("PWD");
+	ft_putendl(pwd);
+	ft_strdel(&pwd);
 }
