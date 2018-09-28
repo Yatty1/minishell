@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/23 16:05:54 by syamada           #+#    #+#             */
-/*   Updated: 2018/09/27 23:18:04 by syamada          ###   ########.fr       */
+/*   Updated: 2018/09/27 23:28:38 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ static char	*parse_dir(char *path, char *curr)
 			path = ft_strjoin_with(path, dpath[i], '/');
 		i++;
 	}
-	ft_putstr("path:");
-	ft_putendl(path);
 	return (path);
 }
 
