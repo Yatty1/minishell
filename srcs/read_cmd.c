@@ -6,12 +6,36 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 14:52:11 by syamada           #+#    #+#             */
-/*   Updated: 2018/09/27 22:15:26 by syamada          ###   ########.fr       */
+/*   Updated: 2018/09/27 23:18:04 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+char	*parse_dollar(char *input, char *p)
+{
+	int		len;
+	char	*pre;
+	char	*new;
+	char	*suf;
+
+	len = 1;
+	new = NULL;
+	while (ft_isalpha(p[len]) && p[len])
+		len++;
+	if (!(pre = ft_strsub(input, 0, p - input)))
+		pre = ft_strnew(1);
+	if (!(suf = ft_strdup(input + (p - input + len))))
+		suf = ft_strnew(1);
+	p = ft_strsub(p, 1, len - 1);
+	if (!(new = get_envv(p)))
+		new = ft_strnew(1);
+	new = ft_strjoinfree(pre, new);
+	new = ft_strjoinfree(new, suf);
+	ft_strdel(&p);
+	ft_strdel(&input); // might be leaking
+	return (new);
+}
 
 char	**parse_arg(char **argv)
 {
@@ -22,17 +46,15 @@ char	**parse_arg(char **argv)
 	new = NULL;
 	while (argv[i])
 	{
-		if (argv[i][0] == '$')
-		{
-			new = get_envv(argv[i] + 1);
-			argv[i] = new;
-		}
-		else if (argv[i][0] == '~')
+		if (argv[i][0] == '~')
 		{
 			new = get_envv("HOME");
 			new = ft_replace(argv[i], ft_charstr('~'), new);
-			argv[i] = new;
+			argv[i] = ft_strdup(new);
+			ft_strdel(&new);
 		}
+		while ((new = ft_strchr(argv[i], '$')))
+			argv[i] = parse_dollar(argv[i], new);
 		i++;
 	}
 	return (argv);
