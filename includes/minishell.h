@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/22 21:06:06 by syamada           #+#    #+#             */
-/*   Updated: 2018/09/27 16:50:50 by syamada          ###   ########.fr       */
+/*   Updated: 2018/09/27 21:31:32 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "../libft/includes/get_next_line.h"
 # include <unistd.h>
 # include <sys/wait.h>
+# include <sys/syslimits.h>
 
 # define CMD_NUM 7
 

@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/23 16:13:21 by syamada           #+#    #+#             */
-/*   Updated: 2018/09/27 15:05:40 by syamada          ###   ########.fr       */
+/*   Updated: 2018/09/27 19:38:41 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,22 @@ void	env_func(int argc, char **argv)
 	i = 0;
 	while (g_environ[i])
 		ft_putendl(g_environ[i++]);
+}
+
+void	setenv_func(int argc, char **argv)
+{
+	if (argc != 2)
+		return ;
+	if (update_envv(argv[0], argv[1]))
+		return ;
+	new_envv(argv[0], argv[1]);
+}
+
+void	unsetenv_func(int argc, char **argv)
+{
+	if (argc != 1)
+		return ;
+	if (!get_envv(argv[0]))
+		return ;
+	del_envv(argv[0]);
 }

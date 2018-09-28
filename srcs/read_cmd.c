@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 14:52:11 by syamada           #+#    #+#             */
-/*   Updated: 2018/09/27 16:50:49 by syamada          ###   ########.fr       */
+/*   Updated: 2018/09/27 22:15:26 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ char	**parse_arg(char **argv)
 	while (argv[i])
 	{
 		if (argv[i][0] == '$')
+		{
 			new = get_envv(argv[i] + 1);
+			argv[i] = new;
+		}
 		else if (argv[i][0] == '~')
 		{
 			new = get_envv("HOME");

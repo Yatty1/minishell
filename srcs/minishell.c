@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/22 21:06:45 by syamada           #+#    #+#             */
-/*   Updated: 2018/09/27 16:50:50 by syamada          ###   ########.fr       */
+/*   Updated: 2018/09/27 22:05:23 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_cmd	g_cmd_table[CMD_NUM] = {
 void   binary_cmd(char **argv)
 {
 	char		*bpath;
+	char		path[PATH_MAX];
 	char		**input;
 	int		i;
 
@@ -40,9 +41,10 @@ void   binary_cmd(char **argv)
 		ft_strdel(&bpath);
 		i++;
 	}
-	execve(bpath, argv, g_environ);
 	ft_tdstrdel(&input);
+	ft_strcpy(path, bpath);
 	ft_strdel(&bpath);
+	execve(path, argv, g_environ);
 }
 
 void	dispatch_cmd(int argc, char	**argv)

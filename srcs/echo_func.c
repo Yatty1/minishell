@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/23 16:07:10 by syamada           #+#    #+#             */
-/*   Updated: 2018/09/27 14:50:16 by syamada          ###   ########.fr       */
+/*   Updated: 2018/09/27 22:16:33 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,4 +14,10 @@
 
 void	echo_func(int argc, char **argv)
 {
+	int		i;
+
+	i = 0;
+	while (argv[i])
+		ft_printf("%s ", argv[i++]);
+	ft_putchar('\n');
 }
