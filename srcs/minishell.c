@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/22 21:06:45 by syamada           #+#    #+#             */
-/*   Updated: 2018/09/27 23:21:17 by syamada          ###   ########.fr       */
+/*   Updated: 2018/09/28 14:25:46 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_cmd	g_cmd_table[CMD_NUM] = {
 	{"exit", &exit_func},
 };
 
-void   binary_cmd(char **argv)
+int	   binary_cmd(char **argv)
 {
 	char		*bpath;
 	char		path[PATH_MAX];
@@ -30,6 +30,8 @@ void   binary_cmd(char **argv)
 	int		i;
 
 	i = 0;
+	if (argv[0][0] == '/')
+		return (execve(argv[0], argv, g_environ));
 	bpath = get_envv("PATH");
 	input = ft_strsplit(bpath, ':');
 	ft_strdel(&bpath);
@@ -44,7 +46,23 @@ void   binary_cmd(char **argv)
 	ft_tdstrdel(&input);
 	ft_strcpy(path, bpath);
 	ft_strdel(&bpath);
-	execve(path, argv, g_environ);
+	return (execve(path, argv, g_environ));
+}
+
+void	exec_binary(char **argv)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid != 0)
+	{
+		wait(&pid);
+		if (WIFEXITED(pid) && WEXITSTATUS(pid) == 10)
+			exit(1);
+	}
+	else if (!pid)
+		if (binary_cmd(argv) == -1)
+			exit(-1);
 }
 
 void	dispatch_cmd(int argc, char	**argv)
@@ -61,7 +79,7 @@ void	dispatch_cmd(int argc, char	**argv)
 		}
 		i++;
 	}
-	binary_cmd(argv);
+	exec_binary(argv);
 }
 
 void	init_environ(char **env)
@@ -76,27 +94,10 @@ void	init_environ(char **env)
 	g_environ[i] = 0;
 }
 
-/*
-** IDEA:
-** custom prompt with flag
-*/
-
 int		main(int argc, char **argv, char **env)
 {
-	pid_t	pid;
-
 	init_environ(env);
 	while (1)
-	{
-		pid = fork();
-		if (pid != 0)
-		{
-			wait(&pid);
-			if (WIFEXITED(pid) && WEXITSTATUS(pid) == 10)
-				exit(1);
-		}
-		else if (!pid)
-			read_cmd();
-	}
+		read_cmd();
 	return (0);
 }

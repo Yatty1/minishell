@@ -6,11 +6,13 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/23 16:05:54 by syamada           #+#    #+#             */
-/*   Updated: 2018/09/27 23:28:38 by syamada          ###   ########.fr       */
+/*   Updated: 2018/09/28 14:34:16 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+//need implementation for - arguemnt which let you go to oldpwd
 
 static char	*parse_dir(char *path, char *curr)
 {

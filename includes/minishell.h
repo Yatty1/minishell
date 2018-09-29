@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/22 21:06:06 by syamada           #+#    #+#             */
-/*   Updated: 2018/09/27 21:31:32 by syamada          ###   ########.fr       */
+/*   Updated: 2018/09/28 14:10:03 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct	s_cmd
 
 void			init_environ(char **env);
 void			dispatch_cmd(int argc, char **argv);
-void			binary_cmd(char **argv);
+int				binary_cmd(char **argv);
 void			read_cmd(void);
 
 char			*get_envv(char *name);

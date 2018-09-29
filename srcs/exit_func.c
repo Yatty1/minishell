@@ -6,11 +6,13 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/23 16:08:41 by syamada           #+#    #+#             */
-/*   Updated: 2018/09/27 15:02:07 by syamada          ###   ########.fr       */
+/*   Updated: 2018/09/28 14:35:00 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// can specify exit number
 
 void	exit_func(int argc, char **argv)
 {

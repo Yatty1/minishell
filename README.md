@@ -35,3 +35,26 @@ $ ./minishell
 - wait, waitpid, wait3, wait4
 - signal, kill
 - exit
+
+## errors
+
+```
+$ /
+sh: /: is a directory
+
+$ /bin
+sh: /bin: is a directory
+
+$ cd <non existing dir>
+sh: cd: <name>: No such file or directory
+
+$ cd <file>
+sh: cd: <name>: Not a directory
+
+$ setenv <name> <value> <something>
+Usage: setenv <<key> <value>>
+
+$ exit 1 2
+exit: too many arguments
+
+```

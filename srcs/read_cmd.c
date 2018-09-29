@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 14:52:11 by syamada           #+#    #+#             */
-/*   Updated: 2018/09/27 23:28:38 by syamada          ###   ########.fr       */
+/*   Updated: 2018/09/28 14:13:12 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,9 @@ void	read_cmd(void)
 		input = parse_arg(input);
 		dispatch_cmd(ft_tdstrnum(input), input);
 		ft_tdstrdel(&input);
-		ft_strdel(&line); //problem is in some process level
-	//	ft_putstr("$> ");
+		ft_strdel(&line);
+		pwd = get_envv("PWD");
+		ft_printf(" %s ", pwd);
+		ft_putstr("$> ");
 	}
 }
