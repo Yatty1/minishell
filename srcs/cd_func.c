@@ -22,11 +22,14 @@ void		ch_dir(char *path, char *curr)
 char		*check_access(char *path)
 {
 	struct stat	st;
+	struct stat nst;
 
 	lstat(path, &st);
+	stat(path, &nst);
 	if (access(path, F_OK) == -1)
 		return ("No such file or directory\n");
-	if (!(st.st_mode & S_IFDIR))
+	if ((!(nst.st_mode & S_IFDIR) && !(st.st_mode & S_IFLNK)) ||
+			((st.st_mode & S_IFLNK) && (nst.st_mode & S_IFREG)))
 		return ("Not a directory\n");
 	if (!(st.st_mode & S_IXUSR))
 		return ("Permission denied\n");
@@ -42,7 +45,7 @@ void		cd_func(int argc, char **argv)
 	path = NULL;
 	emsg = NULL;
 	curr = get_envv("PWD");
-	if (argv[0][0] == '/')
+	if (*argv && argv[0][0] == '/')
 		path = ft_strequ(argv[0], "/") ? ft_strdup("/") : ft_strdup(argv[0]);
 	else if (ft_strequ(argv[0], "-"))
 		path = get_envv("OLDPWD");

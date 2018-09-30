@@ -53,5 +53,7 @@ void			env_func(int argc, char **argv);
 void			exit_func(int argc, char **argv);
 
 void			error_exec(char *cmd, char *path, char *msg);
-void			not_found(void);
+void			not_found(char *cmd);
+void			error_binary(char *cmd);
+
 #endif

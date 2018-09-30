@@ -29,20 +29,21 @@ int	   binary_cmd(char **argv)
 	char		**input;
 	int		i;
 
-	i = 0;
+	i = -1;
 	if (argv[0][0] == '/')
 		return (execve(argv[0], argv, g_environ));
 	bpath = get_envv("PATH");
 	input = ft_strsplit(bpath, ':');
 	ft_strdel(&bpath);
-	while (input[i])
+	while (input[++i])
 	{
 		bpath = ft_strjoin_with(input[i], argv[0], '/');
 		if (access(bpath, F_OK & X_OK) == 0)
 			break;
 		ft_strdel(&bpath);
-		i++;
 	}
+	if (!bpath)
+		return (-1);
 	ft_strcpy(path, bpath);
 	ft_strdel(&bpath);
 	ft_tdstrdel(&input);
@@ -50,7 +51,7 @@ int	   binary_cmd(char **argv)
 	return (execve(path, argv, NULL));
 }
 
-void	exec_binary(char **argv)
+int		exec_binary(char **argv)
 {
 	pid_t	pid;
 
@@ -60,10 +61,12 @@ void	exec_binary(char **argv)
 		wait(&pid);
 		if (WIFEXITED(pid) && WEXITSTATUS(pid) == 10)
 			exit(1);
+		return (1);
 	}
 	else if (!pid)
 		if (binary_cmd(argv) == -1)
-			exit(-1);
+			return (0);
+	return (-1);
 }
 
 void	dispatch_cmd(int argc, char	**argv)
@@ -80,8 +83,8 @@ void	dispatch_cmd(int argc, char	**argv)
 		}
 		i++;
 	}
-	exec_binary(argv);
-	not_found();
+	if (!exec_binary(argv))
+		not_found(argv[0]);
 }
 
 void	init_environ(char **env)

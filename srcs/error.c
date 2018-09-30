@@ -16,7 +16,20 @@ void		error_exec(char *cmd, char *path, char *msg)
 	ft_strdel(&name);
 }
 
-void		not_found(void)
+void		not_found(char *cmd)
 {
-	ft_putstrerr("bash: Command not found\n");
+	struct stat	st;
+
+	ft_putstrerr("bash: ");
+	ft_putstrerr(cmd);
+	ft_putstrerr(": ");
+	if (*cmd != '/')
+		ft_putstrerr("Command not found\n");
+	else
+	{
+		lstat(cmd, &st);
+		if (st.st_mode & S_IFDIR)
+			ft_putstrerr("is a directory\n");
+	}
+	exit(1);
 }
