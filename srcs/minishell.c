@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/22 21:06:45 by syamada           #+#    #+#             */
-/*   Updated: 2018/09/28 14:25:46 by syamada          ###   ########.fr       */
+/*   Updated: 2018/09/30 11:59:50 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ t_cmd	g_cmd_table[CMD_NUM] = {
 	{"exit", &exit_func},
 };
 
-int	   binary_cmd(char **argv)
+int		binary_cmd(char **argv)
 {
 	char		*bpath;
 	char		path[PATH_MAX];
 	char		**input;
-	int		i;
+	int			i;
 
 	i = -1;
 	if (argv[0][0] == '/')
@@ -39,7 +39,7 @@ int	   binary_cmd(char **argv)
 	{
 		bpath = ft_strjoin_with(input[i], argv[0], '/');
 		if (access(bpath, F_OK & X_OK) == 0)
-			break;
+			break ;
 		ft_strdel(&bpath);
 	}
 	if (!bpath)
@@ -69,7 +69,7 @@ int		exec_binary(char **argv)
 	return (-1);
 }
 
-void	dispatch_cmd(int argc, char	**argv)
+void	dispatch_cmd(int argc, char **argv)
 {
 	int		i;
 
