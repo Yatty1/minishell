@@ -12,57 +12,6 @@
 
 #include "minishell.h"
 
-//need implementation for - arguemnt which let you go to oldpwd
-
-static int	count_parent(char **dpath)
-{
-	int		i;
-	int		count;
-
-	i = 0;
-	count = 0;
-	while (dpath[++i])
-		if (ft_strequ("..", dpath[i]))
-			count++;
-	return (count);
-}
-
-static char	*parse_dir(char *path, char *curr)
-{
-	char	**dpath;
-	char	**cpath;
-	char	*tmp;
-	int		len;
-	int		c;
-	int		i;
-
-	dpath = ft_strsplit(path, '/');
-	cpath = ft_strsplit(curr, '/');
-	c = count_parent(dpath);
-	i = 0;
-	len = ft_tdstrnum(cpath);
-	path = ft_strnew(1);
-	while (i < len - c)
-	{
-		tmp = ft_strjoin_with(path, cpath[i++], '/');
-		ft_strdel(&path);
-		path = tmp;
-	}
-	i = -1;
-	while (dpath[++i])
-	{
-		if (!ft_strequ(dpath[i], ".") && !ft_strequ(dpath[i], ".."))
-		{
-			tmp = ft_strjoin_with(path, dpath[i], '/');
-			ft_strdel(&path);
-			path = tmp;
-		}
-	}
-	ft_tdstrdel(&dpath);
-	ft_tdstrdel(&cpath);
-	return (path);
-}
-
 void		ch_dir(char *path, char *curr)
 {
 	update_envv("OLDPWD", curr);

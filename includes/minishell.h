@@ -42,6 +42,8 @@ int				update_envv(char *name, char *value);
 void			new_envv(char *name, char *value);
 void			del_envv(char *name);
 
+char			*parse_dir(char *path, char *curr);
+
 void			pwd_func(int argc, char **argv);
 void			cd_func(int argc, char **argv);
 void			echo_func(int argc, char **argv);
@@ -51,4 +53,5 @@ void			env_func(int argc, char **argv);
 void			exit_func(int argc, char **argv);
 
 void			error_exec(char *cmd, char *path, char *msg);
+void			not_found(void);
 #endif

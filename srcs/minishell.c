@@ -81,6 +81,7 @@ void	dispatch_cmd(int argc, char	**argv)
 		i++;
 	}
 	exec_binary(argv);
+	not_found();
 }
 
 void	init_environ(char **env)

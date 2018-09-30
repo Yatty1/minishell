@@ -15,3 +15,8 @@ void		error_exec(char *cmd, char *path, char *msg)
 	ft_putstrerr(msg);
 	ft_strdel(&name);
 }
+
+void		not_found(void)
+{
+	ft_putstrerr("bash: Command not found\n");
+}

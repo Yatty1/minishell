@@ -79,7 +79,7 @@ void	read_cmd(void)
 		dispatch_cmd(ft_tdstrnum(input), input);
 		ft_tdstrdel(&input);
 		ft_strdel(&line);
-		while (1);
+//		while (1);
 		pwd = get_envv("PWD");
 		ft_printf(" %s ", pwd);
 		ft_strdel(&pwd);
