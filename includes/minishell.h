@@ -48,4 +48,6 @@ void			setenv_func(int argc, char **argv);
 void			unsetenv_func(int argc, char **argv);
 void			env_func(int argc, char **argv);
 void			exit_func(int argc, char **argv);
+
+void			error_exec(char *cmd, char *path, char *msg);
 #endif

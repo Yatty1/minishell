@@ -90,17 +90,17 @@ void	del_envv(char *name)
 	char	*str;
 	char	**tmp;
 
-	i = 0;
 	j = ft_tdstrnum(g_environ);
 	tmp = (char **)ft_memalloc(sizeof(char *) * j);
+	i = -1;
 	j = 0;
-	while (g_environ[i])
+	while (g_environ[++i])
 	{
 		str = ft_strsub(g_environ[i], 0, ft_strchr(g_environ[i], '=')
 				- g_environ[i]);
 		if (!ft_strequ(name, str))
 			tmp[j++] = ft_strdup(g_environ[i]);
-		i++;
+		ft_strdel(&str);
 	}
 	tmp[j] = 0;
 	ft_tdstrdel(&g_environ);

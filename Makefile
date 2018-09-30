@@ -25,7 +25,7 @@ MINI		:= minishell
 
 MINISRC		+= $(addprefix $(SRCDIR)/, minishell.c read_cmd.c \
 			   cd_func.c echo_func.c env_funcs.c pwd_func.c \
-			   exit_func.c env_crud.c)
+			   exit_func.c env_crud.c error.c)
 
 #color
 COM_COLOR	:= \033[0;34m

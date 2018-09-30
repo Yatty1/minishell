@@ -53,7 +53,7 @@ char	**parse_arg(char **argv)
 			argv[i] = ft_strdup(new);
 			ft_strdel(&new);
 		}
-		while ((new = ft_strchr(argv[i], '$')))
+		while ((new = ft_strchr(argv[i], '$')) && *new)
 			argv[i] = parse_dollar(argv[i], new);
 		i++;
 	}
@@ -71,6 +71,7 @@ void	read_cmd(void)
 	pwd = get_envv("PWD");
 	ft_printf(" %s ", pwd);
 	ft_putstr("$> ");
+	ft_strdel(&pwd);
 	while (get_next_line(0, &line) > 0)
 	{
 		input = ft_strsplit(line, ' ');
@@ -78,8 +79,10 @@ void	read_cmd(void)
 		dispatch_cmd(ft_tdstrnum(input), input);
 		ft_tdstrdel(&input);
 		ft_strdel(&line);
+		while (1);
 		pwd = get_envv("PWD");
 		ft_printf(" %s ", pwd);
+		ft_strdel(&pwd);
 		ft_putstr("$> ");
 	}
 }

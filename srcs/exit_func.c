@@ -16,9 +16,17 @@
 
 void	exit_func(int argc, char **argv)
 {
+	int		num;
+
 	if (argc == 0 && !*argv)
+		num = 10;
+	else if (argc == 1)
+		num = ft_atoi(argv[0]);
+	else
 	{
-		ft_tdstrdel(&g_environ);
-		exit(10);
+		ft_putstrerr("Too many arguments");
+		return ;
 	}
+	ft_tdstrdel(&g_environ);
+	exit(num);
 }

@@ -43,10 +43,11 @@ int	   binary_cmd(char **argv)
 		ft_strdel(&bpath);
 		i++;
 	}
-	ft_tdstrdel(&input);
 	ft_strcpy(path, bpath);
 	ft_strdel(&bpath);
-	return (execve(path, argv, g_environ));
+	ft_tdstrdel(&input);
+	ft_tdstrdel(&g_environ);
+	return (execve(path, argv, NULL));
 }
 
 void	exec_binary(char **argv)
@@ -99,5 +100,6 @@ int		main(int argc, char **argv, char **env)
 	init_environ(env);
 	while (1)
 		read_cmd();
+	ft_tdstrdel(&g_environ);
 	return (0);
 }

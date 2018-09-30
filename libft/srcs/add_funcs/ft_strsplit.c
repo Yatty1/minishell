@@ -33,56 +33,31 @@ static int	c_w(char *s, char c)
 	return (i);
 }
 
-static int	count_char(char *s, char c, int i)
+char	**ft_strsplit(char const *s, char c)
 {
-	int		count;
-
-	count = 0;
-	while (s[i] != c && s[i])
-	{
-		i++;
-		count++;
-	}
-	return (count);
-}
-
-static void	assign_str(char *str, char *s, char c, int *i)
-{
-	int		k;
-
-	k = 0;
-	while (s[*i] != c && s[*i])
-	{
-		str[k++] = s[*i];
-		*i = *i + 1;
-	}
-	str[k] = '\0';
-}
-
-char		**ft_strsplit(char const *s, char c)
-{
-	char	**a_str;
+	char	**new;
 	int		i;
 	int		j;
 
 	i = 0;
 	j = 0;
-	if (s == NULL)
+	if (!(new = (char **)malloc(sizeof(char *) * (c_w((char *)s, c) + 1))))
 		return (NULL);
-	if (!(a_str = (char **)malloc(sizeof(char *) * c_w((char *)s, c) + 1)))
-		return (NULL);
+	while (s[i] == c && s[i])
+		i++;
 	while (s[i])
 	{
+		if (!(new[j++] = ft_strsub((char *)s + i, 0,
+						ft_strchr((char *)s + i, c) - (s + i))))
+		{
+			new[j] = 0;
+			ft_tdstrdel(&new);
+			return (NULL);
+		}
+		i += ft_strchr((char *)s + i, c) - ((char *)s + i);
 		while (s[i] == c && s[i])
 			i++;
-		if (s[i] != c && s[i])
-		{
-			if (!(a_str[j] = ft_strnew(count_char((char *)s, c, i))))
-				return (NULL);
-			assign_str(a_str[j], (char *)s, c, &i);
-			j++;
-		}
 	}
-	a_str[j] = 0;
-	return (a_str);
+	new[j] = 0;
+	return (new);
 }
