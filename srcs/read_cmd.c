@@ -33,7 +33,7 @@ char	*parse_dollar(char *input, char *p)
 	new = ft_strjoinfree(pre, new);
 	new = ft_strjoinfree(new, suf);
 	ft_strdel(&p);
-	ft_strdel(&input); // might be leaking
+	ft_strdel(&input);
 	return (new);
 }
 

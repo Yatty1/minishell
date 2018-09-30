@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <sys/wait.h>
 # include <sys/syslimits.h>
+# include <errno.h>
 
 # define CMD_NUM 7
 
