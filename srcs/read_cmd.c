@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 14:52:11 by syamada           #+#    #+#             */
-/*   Updated: 2018/09/30 11:57:14 by syamada          ###   ########.fr       */
+/*   Updated: 2018/10/02 12:37:23 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	read_cmd(void)
 		dispatch_cmd(ft_tdstrnum(input), input);
 		ft_tdstrdel(&input);
 		ft_strdel(&line);
-//		while (1);
+		while (1);
 		pwd = get_envv("PWD");
 		ft_printf(" %s ", pwd);
 		ft_strdel(&pwd);

@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/22 21:06:45 by syamada           #+#    #+#             */
-/*   Updated: 2018/09/30 11:59:50 by syamada          ###   ########.fr       */
+/*   Updated: 2018/10/02 12:37:06 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ int		binary_cmd(char **argv)
 			break ;
 		ft_strdel(&bpath);
 	}
+	ft_tdstrdel(&input);
 	if (!bpath)
 		return (-1);
 	ft_strcpy(path, bpath);
 	ft_strdel(&bpath);
-	ft_tdstrdel(&input);
 	ft_tdstrdel(&g_environ);
 	return (execve(path, argv, NULL));
 }
@@ -64,8 +64,10 @@ int		exec_binary(char **argv)
 		return (1);
 	}
 	else if (!pid)
+	{
 		if (binary_cmd(argv) == -1)
 			return (0);
+	}
 	return (-1);
 }
 

@@ -57,4 +57,8 @@ Usage: setenv <<key> <value>>
 $ exit 1 2
 exit: too many arguments
 
+$ unsetenv OLDPWD PWD && cd -
+
+$ unsetenv HOME && cd ~
+
 ```
