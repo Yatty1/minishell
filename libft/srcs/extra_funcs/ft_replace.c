@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 15:24:06 by syamada           #+#    #+#             */
-/*   Updated: 2018/09/27 15:53:25 by syamada          ###   ########.fr       */
+/*   Updated: 2018/10/03 13:06:48 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,12 @@ char	*ft_replace(char *str, char *target, char *rep)
 	char	*suf;
 	char	*new;
 
-	p = ft_strstr(str, target);
+	if (!(p = ft_strstr(str, target)))
+	{
+		ft_strdel(&rep);
+		ft_strdel(&target);
+		return (str);
+	}
 	pre = p - str == 0 ? ft_strnew(1) : ft_strsub(str, 0, p - str);
 	suf = ft_strdup(str + (p - str + ft_strlen(target)));
 	new = ft_strjoinfree(pre, rep);
