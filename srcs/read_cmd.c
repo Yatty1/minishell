@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 14:52:11 by syamada           #+#    #+#             */
-/*   Updated: 2018/10/03 13:06:47 by syamada          ###   ########.fr       */
+/*   Updated: 2018/10/03 13:17:59 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,20 @@ char	**remove_null(char **argv)
 	return (av);
 }
 
+char	*replace_char(char *str, char c, char r)
+{
+	int		i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			str[i] = r;
+		i++;
+	}
+	return (str);
+}
+
 char	**parse_arg(char **argv)
 {
 	int		i;
@@ -94,6 +108,7 @@ void	read_cmd(void)
 	ft_strdel(&pwd);
 	while (get_next_line(0, &line) > 0)
 	{
+		line = replace_char(line, '\t', ' ');
 		input = ft_strsplit(line, ' ');
 		input = parse_arg(input);
 		dispatch_cmd(ft_tdstrnum(input), input);
