@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/23 16:13:21 by syamada           #+#    #+#             */
-/*   Updated: 2018/09/27 22:44:47 by syamada          ###   ########.fr       */
+/*   Updated: 2018/10/02 20:16:45 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void		env_func(int argc, char **argv)
 void		setenv_func(int argc, char **argv)
 {
 	if (argc != 2)
-		return (env_usage("unsetenv"));
+		return (env_usage("setenv"));
 	if (update_envv(argv[0], argv[1]))
 		return ;
 	new_envv(argv[0], argv[1]);
@@ -47,10 +47,10 @@ void		unsetenv_func(int argc, char **argv)
 	int		i;
 	char	*envv;
 
-	i = 0;
+	i = -1;
 	if (argc < 1)
 		return (env_usage("unsetenv"));
-	while (argv[i])
+	while (argv[++i])
 	{
 		if (!(envv = get_envv(argv[i])))
 		{
@@ -59,6 +59,5 @@ void		unsetenv_func(int argc, char **argv)
 		}
 		ft_strdel(&envv);
 		del_envv(argv[i]);
-		i++;
 	}
 }

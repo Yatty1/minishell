@@ -6,7 +6,7 @@
 #    By: syamada <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/06 21:25:07 by syamada           #+#    #+#              #
-#    Updated: 2018/09/27 19:41:33 by syamada          ###   ########.fr        #
+#    Updated: 2018/10/02 17:09:24 by syamada          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ MINI		:= minishell
 
 MINISRC		+= $(addprefix $(SRCDIR)/, minishell.c read_cmd.c \
 			   cd_func.c echo_func.c env_funcs.c pwd_func.c \
-			   exit_func.c env_crud.c error.c dir_parser.c)
+			   exit_func.c env_crud.c error.c)
 
 #color
 COM_COLOR	:= \033[0;34m

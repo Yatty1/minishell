@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/23 16:05:54 by syamada           #+#    #+#             */
-/*   Updated: 2018/09/28 14:34:16 by syamada          ###   ########.fr       */
+/*   Updated: 2018/10/02 20:13:10 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,18 @@
 
 void		ch_dir(char *path, char *curr)
 {
-	update_envv("OLDPWD", curr);
+	char	*new;
+
+	new = (char *)malloc(sizeof(char) * PATH_MAX);
+	if (!update_envv("OLDPWD", curr ? curr : getcwd(new, PATH_MAX)))
+		new_envv("OLDPWD", curr ? curr : getcwd(new, PATH_MAX));
+	ft_memset(new, '\0', ft_strlen(new));
 	if (!chdir(path))
-		update_envv("PWD", path);
+	{
+		if (!update_envv("PWD", getcwd(new, PATH_MAX)))
+			new_envv("PWD", getcwd(new, PATH_MAX));
+	}
+	ft_strdel(&new);
 }
 
 char		*check_access(char *path)
@@ -24,6 +33,8 @@ char		*check_access(char *path)
 	struct stat	st;
 	struct stat nst;
 
+	if (!path)
+		return (NULL);
 	lstat(path, &st);
 	stat(path, &nst);
 	if (access(path, F_OK) == -1)
@@ -52,7 +63,7 @@ void		cd_func(int argc, char **argv)
 	else if (!*argv)
 		path = get_envv("HOME");
 	else
-		path = parse_dir(ft_strdup(argv[0]), curr);
+		path = ft_strdup(argv[0]);
 	if ((emsg = check_access(path)))
 		error_exec("cd", path, emsg);
 	else

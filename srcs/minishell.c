@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/22 21:06:45 by syamada           #+#    #+#             */
-/*   Updated: 2018/10/02 12:37:06 by syamada          ###   ########.fr       */
+/*   Updated: 2018/10/02 19:57:29 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		binary_cmd(char **argv)
 	int			i;
 
 	i = -1;
-	if (argv[0][0] == '/')
+	if (argv[0][0] == '/' || (argv[0][0] == '.' && argv[0][1] == '/'))
 		return (execve(argv[0], argv, g_environ));
 	bpath = get_envv("PATH");
 	input = ft_strsplit(bpath, ':');
@@ -47,8 +47,7 @@ int		binary_cmd(char **argv)
 		return (-1);
 	ft_strcpy(path, bpath);
 	ft_strdel(&bpath);
-	ft_tdstrdel(&g_environ);
-	return (execve(path, argv, NULL));
+	return (execve(path, argv, g_environ));
 }
 
 int		exec_binary(char **argv)
@@ -59,8 +58,6 @@ int		exec_binary(char **argv)
 	if (pid != 0)
 	{
 		wait(&pid);
-		if (WIFEXITED(pid) && WEXITSTATUS(pid) == 10)
-			exit(1);
 		return (1);
 	}
 	else if (!pid)

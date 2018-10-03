@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/22 21:06:06 by syamada           #+#    #+#             */
-/*   Updated: 2018/09/28 14:10:03 by syamada          ###   ########.fr       */
+/*   Updated: 2018/10/02 19:44:02 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void			del_envv(char *name);
 
 char			*parse_dir(char *path, char *curr);
 
+char			**remove_null(char **argv);
 void			pwd_func(int argc, char **argv);
 void			cd_func(int argc, char **argv);
 void			echo_func(int argc, char **argv);

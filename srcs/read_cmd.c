@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 14:52:11 by syamada           #+#    #+#             */
-/*   Updated: 2018/10/02 12:37:23 by syamada          ###   ########.fr       */
+/*   Updated: 2018/10/02 20:15:48 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,25 @@ char	*parse_dollar(char *input, char *p)
 	return (new);
 }
 
+char	**remove_null(char **argv)
+{
+	char	**av;
+	int		len;
+	int		i;
+
+	len = 0;
+	i = -1;
+	while (argv[++i])
+		len += argv[i][0] ? 1 : 0;
+	av = (char **)malloc(sizeof(char *) * (len + 1));
+	i = -1;
+	while (argv[++i])
+		av[i] = ft_strdup(argv[argv[i][0] != '\0' ? i : i + 1]);
+	av[i] = 0;
+	ft_tdstrdel(&argv);
+	return (av);
+}
+
 char	**parse_arg(char **argv)
 {
 	int		i;
@@ -46,9 +65,10 @@ char	**parse_arg(char **argv)
 	new = NULL;
 	while (argv[i])
 	{
-		if (argv[i][0] == '~')
+		if (argv[i][0] == '~' && (argv[i][1] == '/' || argv[i][1] == '\0'))
 		{
-			new = get_envv("HOME");
+			if (!(new = get_envv("HOME")))
+				new = ft_strnew(1);
 			new = ft_replace(argv[i], ft_charstr('~'), new);
 			argv[i] = ft_strdup(new);
 			ft_strdel(&new);
@@ -57,7 +77,7 @@ char	**parse_arg(char **argv)
 			argv[i] = parse_dollar(argv[i], new);
 		i++;
 	}
-	return (argv);
+	return (remove_null(argv));
 }
 
 void	read_cmd(void)
@@ -79,7 +99,6 @@ void	read_cmd(void)
 		dispatch_cmd(ft_tdstrnum(input), input);
 		ft_tdstrdel(&input);
 		ft_strdel(&line);
-		while (1);
 		pwd = get_envv("PWD");
 		ft_printf(" %s ", pwd);
 		ft_strdel(&pwd);
