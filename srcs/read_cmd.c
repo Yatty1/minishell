@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 14:52:11 by syamada           #+#    #+#             */
-/*   Updated: 2018/10/03 13:17:59 by syamada          ###   ########.fr       */
+/*   Updated: 2018/10/04 15:31:37 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ char	*parse_dollar(char *input, char *p)
 	new = NULL;
 	while (ft_isalpha(p[len]) && p[len])
 		len++;
+	if (len == 1)
+		return (input);
 	if (!(pre = ft_strsub(input, 0, p - input)))
 		pre = ft_strnew(1);
 	if (!(suf = ft_strdup(input + (p - input + len))))
@@ -88,7 +90,8 @@ char	**parse_arg(char **argv)
 			ft_strdel(&new);
 		}
 		while ((new = ft_strchr(argv[i], '$')) && *new)
-			argv[i] = parse_dollar(argv[i], new);
+			if ((argv[i] = parse_dollar(argv[i], new)) && ft_strequ(argv[i], new))
+				break ;
 		i++;
 	}
 	return (remove_null(argv));
