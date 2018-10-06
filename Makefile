@@ -6,7 +6,7 @@
 #    By: syamada <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/06 21:25:07 by syamada           #+#    #+#              #
-#    Updated: 2018/10/03 12:49:05 by syamada          ###   ########.fr        #
+#    Updated: 2018/10/06 12:51:11 by syamada          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,9 +25,8 @@ MINI		:= minishell
 
 MINISRC		+= $(addprefix $(SRCDIR)/, minishell.c read_cmd.c \
 			   cd_func.c echo_func.c env_funcs.c pwd_func.c \
-			   exit_func.c env_crud.c error.c)
+			   exit_func.c env_crud.c error.c prompt.c)
 
-#color
 COM_COLOR	:= \033[0;34m
 OK_COLOR	:= \033[0;32m
 EXEC_COLOR	:= \033[1;32m
@@ -39,7 +38,7 @@ all: $(MINI)
 
 $(MINI): $(LIBDIR) $(LIBDIR)/$(LIB)
 	@printf "%b" "$(NO_COLOR)Creating $(EXEC_COLOR)$@"
-	@$(CC) -o $@ $(CFLAG) $(MINISRC) -I$(INCDIR) -L$< -lft
+	@$(CC) -o $@ $(SANITIZE) $(CFLAG) $(MINISRC) -I$(INCDIR) -L$< -lft
 	@printf "%b" " ✔\n"
 
 $(LIBDIR)/$(LIB):

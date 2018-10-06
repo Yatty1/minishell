@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 14:52:11 by syamada           #+#    #+#             */
-/*   Updated: 2018/10/04 15:31:37 by syamada          ###   ########.fr       */
+/*   Updated: 2018/10/06 12:52:03 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ char	*parse_dollar(char *input, char *p)
 	char	*suf;
 
 	len = 1;
-	new = NULL;
 	while (ft_isalpha(p[len]) && p[len])
 		len++;
 	if (len == 1)
@@ -44,16 +43,21 @@ char	**remove_null(char **argv)
 	char	**av;
 	int		len;
 	int		i;
+	int		j;
 
 	len = 0;
 	i = -1;
+	j = 0;
 	while (argv[++i])
-		len += argv[i][0] ? 1 : 0;
+		len += argv[i][0] != '\0' ? 1 : 0;
 	av = (char **)malloc(sizeof(char *) * (len + 1));
 	i = -1;
 	while (argv[++i])
-		av[i] = ft_strdup(argv[argv[i][0] != '\0' ? i : i + 1]);
-	av[i] = 0;
+	{
+		if (argv[i][0] != '\0')
+			av[j++] = ft_strdup(argv[i]);
+	}
+	av[j] = 0;
 	ft_tdstrdel(&argv);
 	return (av);
 }
@@ -90,7 +94,8 @@ char	**parse_arg(char **argv)
 			ft_strdel(&new);
 		}
 		while ((new = ft_strchr(argv[i], '$')) && *new)
-			if ((argv[i] = parse_dollar(argv[i], new)) && ft_strequ(argv[i], new))
+			if ((argv[i] = parse_dollar(argv[i], new)) &&
+					ft_strequ(argv[i], new))
 				break ;
 		i++;
 	}
@@ -105,10 +110,7 @@ void	read_cmd(void)
 
 	line = NULL;
 	input = NULL;
-	pwd = get_envv("PWD");
-	ft_printf(" %s ", pwd);
-	ft_putstr("$> ");
-	ft_strdel(&pwd);
+	print_prompt();
 	while (get_next_line(0, &line) > 0)
 	{
 		line = replace_char(line, '\t', ' ');
@@ -117,9 +119,6 @@ void	read_cmd(void)
 		dispatch_cmd(ft_tdstrnum(input), input);
 		ft_tdstrdel(&input);
 		ft_strdel(&line);
-		pwd = get_envv("PWD");
-		ft_printf(" %s ", pwd);
-		ft_strdel(&pwd);
-		ft_putstr("$> ");
+		print_prompt();
 	}
 }

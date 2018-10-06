@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd_func.c                                         :+:      :+:    :+:   */
+/*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/09/23 16:06:37 by syamada           #+#    #+#             */
-/*   Updated: 2018/10/05 21:47:37 by syamada          ###   ########.fr       */
+/*   Created: 2018/10/06 10:41:47 by syamada           #+#    #+#             */
+/*   Updated: 2018/10/06 12:46:16 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	pwd_func(int argc, char **argv)
+void	print_prompt(void)
 {
 	char	*pwd;
+	char	*usr;
 
-	pwd = (char *)malloc(sizeof(char) * PATH_MAX);
-	getcwd(pwd, PATH_MAX);
-	ft_putendl(pwd);
+	if (!(usr = get_envv("USER")))
+		usr = ft_strnew(1);
+	if (!(pwd = get_envv("PWD")))
+	{
+		pwd = (char *)malloc(sizeof(char) * PATH_MAX);
+		pwd = getcwd(pwd, PATH_MAX);
+	}
+	pwd = ft_replace(pwd, get_envv("HOME"), ft_charstr('~'));
+	ft_printf("\e[1;34m%s\e[1;37m:\n\e[1;31m%s \e[1;37m$ \e[0m", pwd, usr);
+	ft_strdel(&usr);
 	ft_strdel(&pwd);
 }
