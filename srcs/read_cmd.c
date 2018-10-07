@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 14:52:11 by syamada           #+#    #+#             */
-/*   Updated: 2018/10/06 14:29:08 by syamada          ###   ########.fr       */
+/*   Updated: 2018/10/06 23:12:14 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*parse_dollar(char *input, char *p)
 	char	*suf;
 
 	len = 1;
-	while (ft_isalpha(p[len]) && p[len])
+	while ((ft_isalnum(p[len]) || p[len] == '_') && p[len])
 		len++;
 	if (len == 1)
 		return (input);
