@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 14:52:11 by syamada           #+#    #+#             */
-/*   Updated: 2018/10/06 23:12:14 by syamada          ###   ########.fr       */
+/*   Updated: 2018/10/13 14:45:26 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,18 +106,25 @@ void	read_cmd(void)
 {
 	char	*line;
 	char	**input;
+	char	**commands;
 	char	*pwd;
+	int		i;
 
 	line = NULL;
-	input = NULL;
 	print_prompt();
 	while (get_next_line(0, &line) > 0)
 	{
-		line = replace_char(line, '\t', ' ');
-		input = ft_strsplit(line, ' ');
-		input = parse_arg(input);
-		dispatch_cmd(ft_tdstrnum(input), input);
-		ft_tdstrdel(&input);
+		commands = ft_strsplit(line, ';');
+		i = -1;
+		while (commands[++i])
+		{
+			commands[i] = replace_char(commands[i], '\t', ' ');
+			input = ft_strsplit(commands[i], ' ');
+			input = parse_arg(input);
+			dispatch_cmd(ft_tdstrnum(input), input);
+			ft_tdstrdel(&input);
+		}
+		ft_tdstrdel(&commands);
 		ft_strdel(&line);
 		print_prompt();
 	}
